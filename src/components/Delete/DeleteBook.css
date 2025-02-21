@@ -45,6 +45,7 @@
     transition: 0.3s;
     font-size: medium;
     font-weight: bold;
+    margin: 0;
   }
   
   .confirm-button {
