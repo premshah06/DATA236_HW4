@@ -34,8 +34,8 @@
   
   .confirm-button, .cancel-button {
     padding: 14px 22px;
-    width: 120px; /* Ensures both buttons have the same width */
-    height: 50px; /* Ensures same height */
+    width: 120px; 
+    height: 50px; 
     display: flex;
     align-items: center;
     justify-content: center;

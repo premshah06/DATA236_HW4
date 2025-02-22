@@ -42,13 +42,13 @@
   }
   
   .button-group {
-    display: flex;
+
     gap: 10px;
+    align-items: center;
   }
   
   .update-button, .cancel-button {
     padding: 14px 22px;
-    margin-top: 10px;
     border-radius: 1rem;
     border: none;
     cursor: pointer;
