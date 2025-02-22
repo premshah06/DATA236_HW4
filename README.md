@@ -15,11 +15,3 @@ A React and Node.js (Sequelize) project for managing books with CRUD operations.
   - Deletes a book and redirects to Home.
 - **Routing & Hooks:** Uses React-Router-Dom, `useState`, and `useEffect`.
 
-## MySQL with Node.js (Sequelize)
-- Database: `book_db` with `books` table.
-- **API Endpoints:**
-  - POST `/books` - Add a new book.
-  - GET `/books` - View all books.
-  - GET `/books/:id` - View book by ID.
-  - PUT `/books/:id` - Update book details.
-  - DELETE `/books/:id` - Delete a book.
