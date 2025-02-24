@@ -1,12 +1,22 @@
-import React, { useContext, useState, useEffect } from "react";
-import { Pencil, Trash2 } from "lucide-react"; // Importing icons
+import React, { useContext, useEffect } from "react";
+import { Pencil, Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { BookContext } from "../../App";
 import "./Home.css";
 
 const Home = () => {
-    const { books } = useContext(BookContext);
-   
+    const { books, setBooks } = useContext(BookContext);
+
+    useEffect(() => {
+        const storedBooks = JSON.parse(localStorage.getItem("books"));
+        if (storedBooks) {
+            setBooks(storedBooks);
+        }
+    }, [setBooks]);
+
+    useEffect(() => {
+        localStorage.setItem("books", JSON.stringify(books));
+    }, [books]);
 
     return (
       <div className="home-container">
@@ -48,4 +58,5 @@ const Home = () => {
       </div>
     );
 };
+
 export default Home;
