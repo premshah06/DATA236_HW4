@@ -1,62 +1,55 @@
-import React, { useContext, useEffect } from "react";
-import { Pencil, Trash2 } from "lucide-react";
-import { Link } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { BookContext } from "../../App";
-import "./Home.css";
+import "./UpdateBook.css";
 
-const Home = () => {
-    const { books, setBooks } = useContext(BookContext);
+const UpdateBook = () => {
+  const { id } = useParams();
+  const { books, setBooks } = useContext(BookContext);
+  const navigate = useNavigate();
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
 
-    useEffect(() => {
-        const storedBooks = JSON.parse(localStorage.getItem("books"));
-        if (storedBooks) {
-            setBooks(storedBooks);
-        }
-    }, [setBooks]);
+  useEffect(() => {
+    const book = books.find((b) => b.id === parseInt(id));
+    if (book) {
+      setTitle(book.title);
+      setAuthor(book.author);
+    }
+  }, [id, books]);
 
-    useEffect(() => {
-        localStorage.setItem("books", JSON.stringify(books));
-    }, [books]);
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    setBooks(books.map((b) => (b.id === parseInt(id) ? { id: b.id, title, author } : b)));
+    localStorage.setItem("books", JSON.stringify(books));
+    navigate("/");
+  };
 
-    return (
-      <div className="home-container">
-        <h1 className="title">Book Management</h1>
-        <hr />
-        <p className="add-book-text">
-            Got a new book?  
-            <Link to="/create">
-                <button className="add-button">Add it here!</button>
-            </Link>
-        </p>
-        <table className="book-table">
-          <thead>
-            <tr>
-                <th>ID</th>
-              <th>Title</th>
-              <th>Author</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {books.map((book) => (
-              <tr key={book.id}>
-                <td><b>{book.id}</b></td>
-                <td><b>{book.title}</b></td>
-                <td><b>{book.author}</b></td>
-                <td>
-                    <Link to={`/update/${book.id}`}>
-                        <Pencil className="icon edit-icon" />
-                    </Link>
-                    <Link to={`/delete/${book.id}`}>
-                        <Trash2 className="icon delete-icon" />
-                    </Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    );
+  return (
+    <div className="update-container">
+      <h2 className="update-title">Update Book</h2>
+      <form className="update-form" onSubmit={handleUpdate}>
+        <input 
+          className="input-field" 
+          type="text" 
+          value={title} 
+          onChange={(e) => setTitle(e.target.value)} 
+          required 
+        />
+        <input 
+          className="input-field" 
+          type="text" 
+          value={author} 
+          onChange={(e) => setAuthor(e.target.value)} 
+          required 
+        />
+        <div className="button-group">
+          <button className="update-button" type="submit">Update Book</button>
+          <button className="cancel-button" type="button" onClick={() => navigate("/")}>Cancel</button>
+        </div>
+      </form>
+    </div>
+  );
 };
 
-export default Home;
+export default UpdateBook;
